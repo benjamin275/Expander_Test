@@ -1,22 +1,45 @@
 ﻿<Controls:MetroWindow x:Class="Expander_Test.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      ShowIconOnTitleBar="True"
+                      WindowStartupLocation="CenterScreen"
+                      WindowTitleBrush="{DynamicResource AccentColorBrush}"
+                      Title="MainWindow"
+                      Height="350"
+                      Width="525">
 
-        xmlns:Controls          ="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        ShowIconOnTitleBar      ="True"
-        WindowStartupLocation   ="CenterScreen"
-        WindowTitleBrush ="{DynamicResource AccentColorBrush}"
-        
-        Title="MainWindow" Height="350" Width="525">
-    
     <Grid>
-
-        <ListView  Grid.Column="0" x:Name="m_ListBooks" SelectionChanged="ListView_Books_SelectionChanged" ToolTip="Click to open" Margin="6,67,0,0" 
-                       
-				MinWidth="161" MinHeight="330" 
-                VerticalContentAlignment="Center" LayoutUpdated="m_lv_Books_LayoutUpdated" 
-                ScrollViewer.HorizontalScrollBarVisibility="Auto" Cursor="Hand"  Height="369" BorderThickness="0" HorizontalAlignment="Left" Width="234" VerticalAlignment="Top"   >
+        
+        <Grid.Resources>
+            <Style x:Key="ExpanderCustomUpHeaderStyle"
+                   TargetType="{x:Type ToggleButton}"
+                   BasedOn="{StaticResource ExpanderUpHeaderStyle}">
+                <Setter Property="Margin" Value="1" />
+            </Style>
+            <Style x:Key="ExpanderCustomDownHeaderStyle"
+                   TargetType="{x:Type ToggleButton}"
+                   BasedOn="{StaticResource ExpanderDownHeaderStyle}">
+                <Setter Property="Margin" Value="1" />
+            </Style>
+        </Grid.Resources>
+        
+        <ListView  Grid.Column="0"
+                   x:Name="m_ListBooks"
+                   SelectionChanged="ListView_Books_SelectionChanged"
+                   ToolTip="Click to open"
+                   Margin="6,67,0,0"
+                   MinWidth="161"
+                   MinHeight="330"
+                   VerticalContentAlignment="Center"
+                   LayoutUpdated="m_lv_Books_LayoutUpdated"
+                   ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                   Cursor="Hand"
+                   Height="369"
+                   BorderThickness="0"
+                   HorizontalAlignment="Left"
+                   Width="234"
+                   VerticalAlignment="Top">
 
             <ListView.GroupStyle>
                 <GroupStyle>
@@ -25,13 +48,25 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate>
-                                        <Expander IsExpanded="False" BorderThickness="0" FontFamily="Arial"   >
-                                            <Expander.Header >
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="10" VerticalAlignment="Center" />
-                                                    <TextBlock Text="{Binding ItemCount, StringFormat=' ({0})'}"  FontSize="8" VerticalAlignment="Center" />
-                                                </StackPanel>
-                                            </Expander.Header>
+                                        <Expander IsExpanded="False"
+                                                  Controls:ExpanderHelper.HeaderUpStyle="{StaticResource ExpanderCustomUpHeaderStyle}"
+                                                  Controls:ExpanderHelper.HeaderDownStyle="{StaticResource ExpanderCustomDownHeaderStyle}"
+                                                  BorderThickness="0"
+                                                  FontFamily="Arial"
+                                                  Header="{Binding}">
+                                            <Expander.HeaderTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Name}"
+                                                                   FontWeight="Bold"
+                                                                   FontSize="10"
+                                                                   VerticalAlignment="Center" />
+                                                        <TextBlock Text="{Binding ItemCount, StringFormat=' ({0})'}"
+                                                                   FontSize="8"
+                                                                   VerticalAlignment="Center" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </Expander.HeaderTemplate>
                                             <ItemsPresenter />
                                         </Expander>
                                     </ControlTemplate>
@@ -44,10 +79,17 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="40" DisplayMemberBinding="{Binding Nr}" Header="Nr" />
-                    
-                    <GridViewColumn DisplayMemberBinding="{Binding CaptureMax}" >
-                        <GridViewColumnHeader Content="Capture" Width="72" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" VerticalContentAlignment="Center" />
+                    <GridViewColumn Width="40"
+                                    DisplayMemberBinding="{Binding Nr}"
+                                    Header="Nr" />
+
+                    <GridViewColumn DisplayMemberBinding="{Binding CaptureMax}">
+                        <GridViewColumnHeader Content="Capture"
+                                              Width="72"
+                                              HorizontalAlignment="Center"
+                                              HorizontalContentAlignment="Center"
+                                              VerticalAlignment="Top"
+                                              VerticalContentAlignment="Center" />
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
